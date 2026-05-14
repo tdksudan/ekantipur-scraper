@@ -1,0 +1,34 @@
+# Ekantipur Scraper Prompts Log
+
+1. Initial Entertainment Section
+   - Locator used: article.teaser
+   - Goal: Extract top 5 entertainment articles
+   - Issue: Returned empty list because DOM uses category-inner-wrapper
+
+2. Entertainment Section (Corrected)
+   - Locator used: div.category-main-wrapper div.category-wrapper div.category div.category-inner-wrapper
+   - Extracted fields:
+       title → div.category-description
+       image_url → div.category-image img
+       author → .author (later corrected to div.author-name p a)
+
+3. Cartoon Section
+   - Locator used: section.cartoon-main-wrapper div.row.g-5 div.col-lg-4
+   - Flexible title extraction:
+       h2 → h3 → a → fallback text
+   - Extracted fields:
+       title, image_url, author (fallback "Unknown")
+
+4. Advertisement Overlay Handling
+   - Prompt: Detect and click "Skip" button
+   - Locator used: text=Skip (adjust if localized)
+   - Purpose: Ensure scraper can interact with DOM after overlay is dismissed
+
+5. Author Extraction (Corrected)
+   - Locator used: div.category-description div.author-name p a
+   - Purpose: Capture Nepali author names correctly
+   - Fallback: None → returns null if not found
+
+6. Title Cleaning
+   - Regex used: re.sub(r"\d+\s*MINS READ", "", raw_text)
+   - Purpose: Remove trailing "MINS READ" suffix from titles
