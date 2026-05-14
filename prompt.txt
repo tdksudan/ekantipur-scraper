@@ -68,13 +68,6 @@ Automate extraction from https://ekantipur.com using Playwright (Python, sync AP
 
 ---
 
-## Commands (local)
-
-- Install deps per `README.md` / `pyproject.toml` (Playwright + `playwright install`).
-- Run: `python scraper.py` from project root so `output.json` is written beside the script.
-
----
-
 ## Changelog (prompt / selector iterations)
 
 1. Entertainment — first attempt used `article.teaser`; empty results; switched to category-inner-wrapper grid.
