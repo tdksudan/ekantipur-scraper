@@ -1,6 +1,12 @@
 {
     "entertainment_news": [
         {
+            "title": "कान्समा फेसन स्टेटमेन्ट : विवादले निम्त्याएकाे ‘ड्रेस कोड’ को नियमएजेन्सी कान्सले विश्वका प्रसिद्ध फिल्मकर्मी, सेलेब्रिटी सम्मिलित हुने प्रतिष्ठित महोत्सवलाई व्यवस्थित र मर्यादित बनाउने ध्येयले रेड कार्पेट र्‍याम्पमा लगाइने पोसाकमा कडा उर्दी जारी गरेको छ ।",
+            "image_url": "https://assets-cdn-api.ekantipur.com/thumb.php?src=https://assets-cdn.ekantipur.com/uploads/source/news/kantipur/2026/third-party/julia-roberts-2016-1452026102041-1452026120535-1000x0.jpg&w=701&h=0",
+            "category": "मनोरञ्जन",
+            "author": "एजेन्सी"
+        },
+        {
             "title": "‘गरिबको चमेली’ : बालेनले गाए, बालेनतिरै फर्कियोरीना मोक्तान सामाजिक सञ्जालदेखि सडकसम्म ‘गरिबको चमेली’ गीतको व्यंग्यात्मक प्रयोग गर्दै नागरिकहरूले बालेन सरकारको व्यवहारमाथि प्रश्न उठाएका छन् ।",
             "image_url": "https://assets-cdn-api.ekantipur.com/thumb.php?src=https://assets-cdn.ekantipur.com/uploads/source/news/kantipur/2026/miscellaneous/sukumbashiprotestatmaitighar202605084266-1252026110024-1000x0.jpg&w=701&h=0",
             "category": "मनोरञ्जन",
@@ -8,7 +14,7 @@
         },
         {
             "title": "प्रतिबन्ध लागेको ५५ वर्षपछि कान्समा ‘द डेभिल्स’कान्तिपुर संवाददाता वितरक कम्पनी वार्नर ब्रोज क्लकवर्कले १६ अक्टोबरदेखि उत्तर अमेरिकाबाट पनि सार्वजनिक प्रदर्शनी थाल्दैछ । फिल्मलाइ ‘डाइरेक्टर्स कट’ मा पुनःप्रदर्शन गर्न लागिएको कम्पनीले जनाएको छ ।",
-            "image_url": "https://assets-cdn-api.ekantipur.com/thumb.php?src=https://assets-cdn.ekantipur.com/uploads/source/news/kantipur/2026/the-devils-1252026100643-1000x0.jpg&w=701&h=0",
+            "image_url": null,
             "category": "मनोरञ्जन",
             "author": "कान्तिपुर संवाददाता"
         },
@@ -23,16 +29,10 @@
             "image_url": null,
             "category": "मनोरञ्जन",
             "author": "इकान्तिपुर डेस्क"
-        },
-        {
-            "title": "‘सर्ट फिल्म डेभलपमेन्ट ल्याब’मा ६ प्रोजेक्ट छनोटकान्तिपुर संवाददाता युवा स्वतन्त्र चलचित्रकर्मी र स्थापित निर्माताहरूबीचको दूरी मेटाउँदै कथापरक सिनेमाको नयाँ पुस्तालाई अघि बढाउन यो सहकार्यले उत्प्रेरकको भूमिका खेल्ने विश्वास किम्फले लिएको छ ।",
-            "image_url": null,
-            "category": "मनोरञ्जन",
-            "author": "कान्तिपुर संवाददाता"
         }
     ],
     "cartoon_of_the_day": {
-        "title": "",
+        "title": "गजब छ बा!",
         "image_url": "https://assets-cdn-api.ekantipur.com/thumb.php?src=https://assets-cdn.ekantipur.com/uploads/source/news/kantipur/2022/third-party/editorial-cartoon-kantipur-830130-1352026064155-1000x0.jpg&w=601&h=0",
         "author": "Unknown"
     }

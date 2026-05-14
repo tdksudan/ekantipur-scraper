@@ -42,7 +42,7 @@ def scrape_ekantipur():
 
                 # Author inside description block → div.author-name p a
                 author_locator = description_block.locator("div.author-name p a")
-                author = author_locator.text_content().strip() if author_locator.count() > 0 else None
+                author = author_locator.text_content().strip() if author_locator.count() > 0 else "Unknown"
 
                 entertainment_data.append({
                     "title": title,
@@ -60,21 +60,19 @@ def scrape_ekantipur():
             "section.cartoon-main-wrapper div.row.g-5 div.col-lg-4"
         ).first
 
-        # Flexible title locator
-        if cartoon_section.locator("h2").count() > 0:
-            title = cartoon_section.locator("h2").text_content().strip()
-        elif cartoon_section.locator("h3").count() > 0:
-            title = cartoon_section.locator("h3").text_content().strip()
-        elif cartoon_section.locator("a").count() > 0:
-            title = cartoon_section.locator("a").text_content().strip()
+        # Get the first <p> inside cartoon-description
+        description_text = cartoon_section.locator(".cartoon-description p").first.text_content().strip()
+
+        # Split into title and author
+        if "-" in description_text:
+            title, author = [part.strip() for part in description_text.split("-", 1)]
         else:
-            title = cartoon_section.text_content().strip()
+            title, author = description_text, "Unknown"
 
         cartoon_data = {
             "title": title,
             "image_url": cartoon_section.locator("img").get_attribute("src"),
-            "author": cartoon_section.locator(".author").text_content().strip()
-                      if cartoon_section.locator(".author").count() > 0 else "Unknown"
+            "author": author if author else "Unknown"
         }
 
         # Prepare final output structure
