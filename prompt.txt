@@ -1,36 +1,84 @@
-# Ekantipur Scraper Prompts Log
+# Ekantipur scraper — master prompt & selector log
 
-1. Initial Entertainment Section
-   - Locator used: article.teaser
-   - Goal: Extract top 5 entertainment articles
-   - Issue: Returned empty list because DOM uses category-inner-wrapper
+Use this file to brief an AI or developer when changing `scraper.py`, debugging selectors, or extending the scraper.
 
-2. Entertainment Section (Corrected)
-   - Locator used: div.category-main-wrapper div.category-wrapper div.category div.category-inner-wrapper
-   - Extracted fields:
-       title → div.category-description
-       image_url → div.category-image img
-       author → .author (later corrected to div.author-name p a)
+---
 
-3. Cartoon Section (Corrected)
-   - Locator used: section.cartoon-main-wrapper div.row.g-5 div.col-lg-4
-   - Ectracted fields:
-      -title/author → cartoon-description p:first 
-        - First <p> contains "Title - Author" format 
-        - Split at - to separate title and author 
-        - Fallback: "Unknown" if author missing
-      -image_url → img
+## Goal
 
-4. Advertisement Overlay Handling
-   - Prompt: Detect and click "Skip" button
-   - Locator used: text=Skip (adjust if localized)
-   - Purpose: Ensure scraper can interact with DOM after overlay is dismissed
+Automate extraction from https://ekantipur.com using Playwright (Python, sync API):
 
-5. Author Extraction (Corrected)
-   - Locator used: div.category-description div.author-name p a
-   - Purpose: Capture Nepali author names correctly
-   - Fallback: None → returns null if not found
+1. Open the homepage, dismiss an ad overlay if present (click text "Skip").
+2. Visit `/entertainment` and collect the **top 5** entertainment teaser cards.
+3. Visit `/cartoon` and collect **one** "cartoon of the day" entry (first matching column).
+4. Write UTF-8 JSON to `output.json` (Devanagari preserved: `ensure_ascii=False`).
 
-6. Title Cleaning
-   - Regex used: re.sub(r"\d+\s*MINS READ", "", raw_text)
-   - Purpose: Remove trailing "MINS READ" suffix from titles
+---
+
+## Output schema (`output.json`)
+
+```json
+{
+  "entertainment_news": [
+    {
+      "title": "string",
+      "image_url": "string or null",
+      "category": "मनोरञ्जन",
+      "author": "string or Unknown"
+    }
+  ],
+  "cartoon_of_the_day": {
+    "title": "string",
+    "image_url": "string or null",
+    "author": "string or Unknown"
+  }
+}
+```
+
+---
+
+## Current implementation notes (`scraper.py`)
+
+- Browser: Chromium, `headless=False` by default.
+- Navigation: `page.goto(..., wait_until="networkidle")` on home, entertainment, and cartoon URLs. (Modern sites may need `load`/`domcontentloaded` plus explicit waits if this flakes.)
+- Overlay: `page.locator("text=Skip")` — click only if `count() > 0`; errors are swallowed with a log message.
+
+---
+
+## Selectors (verified / in use)
+
+### Entertainment (5 cards)
+
+- Card container:
+  `div.category-main-wrapper div.category-wrapper div.category div.category-inner-wrapper`
+- Per card:
+  - Raw title text: `div.category-description` → `text_content()`; then strip trailing read-time via regex `\d+\s*MINS READ`.
+  - Image: `div.category-image img` → attribute `src`.
+  - Author: `div.category-description div.author-name p a` → `text_content()`; if missing, use `"Unknown"`.
+- Category label in JSON is fixed: `मनोरञ्जन`.
+
+**Past issue:** `article.teaser` returned no nodes; site uses `category-inner-wrapper` layout instead.
+
+### Cartoon (first item)
+
+- Section: `section.cartoon-main-wrapper div.row.g-5 div.col-lg-4` → `.first`
+- Description: `.cartoon-description p` → `.first` → `text_content().strip()`
+- Parse: split on first `-` into `title` and `author`; if no `-`, author `"Unknown"`.
+- Image: `img` inside that column → `src`.
+
+---
+
+## Commands (local)
+
+- Install deps per `README.md` / `pyproject.toml` (Playwright + `playwright install`).
+- Run: `python scraper.py` from project root so `output.json` is written beside the script.
+
+---
+
+## Changelog (prompt / selector iterations)
+
+1. Entertainment — first attempt used `article.teaser`; empty results; switched to category-inner-wrapper grid.
+2. Entertainment — author first tried generic `.author`; corrected to `div.author-name p a` for Nepali bylines.
+3. Cartoon — use first `col-lg-4` block; title/author from first `.cartoon-description p`, split on `-`.
+4. Ads — skip overlay via `text=Skip` when present.
+5. Titles — strip `\d+\s*MINS READ` from entertainment description text after extraction.
