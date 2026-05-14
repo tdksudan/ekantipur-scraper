@@ -12,12 +12,14 @@
        image_url → div.category-image img
        author → .author (later corrected to div.author-name p a)
 
-3. Cartoon Section
+3. Cartoon Section (Corrected)
    - Locator used: section.cartoon-main-wrapper div.row.g-5 div.col-lg-4
-   - Flexible title extraction:
-       h2 → h3 → a → fallback text
-   - Extracted fields:
-       title, image_url, author (fallback "Unknown")
+   - Ectracted fields:
+      -title/author → cartoon-description p:first 
+        - First <p> contains "Title - Author" format 
+        - Split at - to separate title and author 
+        - Fallback: "Unknown" if author missing
+      -image_url → img
 
 4. Advertisement Overlay Handling
    - Prompt: Detect and click "Skip" button
